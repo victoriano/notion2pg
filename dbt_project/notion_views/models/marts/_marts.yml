@@ -91,8 +91,8 @@ models:
   - name: categories_view_complete
     description: |
       Complete materialized table for categories with all properties properly joined.
-      Includes category names, descriptions, parent/child relationships, and
-      information required values from related tables.
+      Includes category names, descriptions, parent/child relationships with actual names,
+      and information required values from related tables.
     columns:
       - name: page_id
         description: "Unique identifier for the category"
@@ -105,8 +105,12 @@ models:
         description: "Category description from rich text table"
       - name: parent_category_ids
         description: "Comma-separated IDs of parent categories"
+      - name: parent_category_names
+        description: "Comma-separated names of parent categories (e.g., Economics, Social Sciences)"
       - name: subcategory_ids
         description: "Comma-separated IDs of subcategories"
+      - name: subcategory_names
+        description: "Comma-separated names of subcategories (e.g., Housing / Real Estate, Taxes)"
       - name: subcategory_count
         description: "Number of subcategories"
       - name: information_required
