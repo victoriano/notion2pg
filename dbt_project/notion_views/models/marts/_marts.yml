@@ -58,4 +58,78 @@ models:
       - name: source
         description: "Source of the fact"
       - name: is_verified
-        description: "Whether the fact has been verified" 
+        description: "Whether the fact has been verified"
+        
+  - name: books_view_complete
+    description: |
+      Complete materialized table for books with all properties properly joined.
+      Includes actual book titles, author names, status values, and format values
+      from related tables, not just IDs.
+    columns:
+      - name: page_id
+        description: "Unique identifier for the book"
+        tests:
+          - unique
+          - not_null
+      - name: title
+        description: "Book title from joined title table"
+      - name: authors
+        description: "Comma-separated list of author names"
+      - name: status
+        description: "Book status values (e.g., Pending, Reading, Done)"
+      - name: format
+        description: "Book format values (e.g., Digital, Physical)"
+      - name: amazon_url
+        description: "Amazon URL for the book"
+        
+  - name: categories_view_complete
+    description: |
+      Complete materialized table for categories with all properties properly joined.
+      Includes category names, descriptions, parent/child relationships, and
+      information required values from related tables.
+    columns:
+      - name: page_id
+        description: "Unique identifier for the category"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Category name from joined title table"
+      - name: description
+        description: "Category description from rich text table"
+      - name: parent_category_ids
+        description: "Comma-separated IDs of parent categories"
+      - name: subcategory_ids
+        description: "Comma-separated IDs of subcategories"
+      - name: subcategory_count
+        description: "Number of subcategories"
+      - name: information_required
+        description: "Information required multi-select values"
+      - name: total_facts_count
+        description: "Total number of facts in this category (rollup)"
+        
+  - name: facts_view_complete
+    description: |
+      Complete materialized table for facts with all properties properly joined.
+      Includes fact text, why read it content, and category relationships
+      from related tables.
+    columns:
+      - name: page_id
+        description: "Unique identifier for the fact"
+        tests:
+          - unique
+          - not_null
+      - name: fact_text
+        description: "The actual fact content from joined title table"
+      - name: why_read_it
+        description: "Why this fact is worth reading"
+      - name: category_ids
+        description: "Comma-separated IDs of related categories"
+      - name: category_count
+        description: "Number of categories this fact belongs to"
+      - name: is_verified
+        description: "Whether the fact has been verified"
+      - name: source
+        description: "Source of the fact"
+      - name: fact_url
+        description: "URL related to the fact" 

@@ -35,3 +35,29 @@ sources:
         
       - name: notion_8931b2899f7848d3bcd13etpdbvqerties__format__multi_select
         description: "Book format multi-select values"
+        
+      # Related tables for categories
+      - name: notion_74f924b4672b4c0ead1651bwuwxw_properties__category__title
+        description: "Category names (title property)"
+        
+      - name: notion_74f924b4672b4c0ead1651fotcbwties__description__rich_text
+        description: "Category descriptions"
+        
+      - name: notion_74f924b4672b4c0ead1651gwwcwgation_required__multi_select
+        description: "Category information required multi-select"
+        
+      - name: notion_74f924b4672b4c0ead16511rjfvas__parent_category__relation
+        description: "Parent category relations"
+        
+      - name: notion_74f924b4672b4c0ead1651lfshcqies__subcategories__relation
+        description: "Subcategories relations"
+        
+      # Related tables for facts
+      - name: notion_b981dec447fb4060877505kdsprg45c__properties__name__title
+        description: "Fact text (title property)"
+        
+      - name: notion_b981dec447fb4060877505rtuspaties__why_read_it__rich_text
+        description: "Why read it field for facts"
+        
+      - name: notion_b981dec447fb4060877505vxkhqwoperties__category__relation
+        description: "Fact category relations"
