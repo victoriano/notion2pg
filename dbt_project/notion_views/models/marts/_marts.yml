@@ -33,7 +33,7 @@ models:
     description: |
       Complete materialized table for categories with all properties properly joined.
       Includes category names, descriptions, parent/child relationships with actual names,
-      and information required values from related tables.
+      icon emojis, and information required values from related tables.
     columns:
       - name: page_id
         description: "Unique identifier for the category"
@@ -44,6 +44,14 @@ models:
         description: "Category name from joined title table"
       - name: description
         description: "Category description from rich text table"
+      - name: icon_type
+        description: "Type of icon (e.g., 'emoji', 'external', 'file')"
+      - name: icon_emoji
+        description: "Emoji icon for the category (e.g., 🫀, 🧠, 🏡, 🤖, 🇨🇦)"
+      - name: icon_external_url
+        description: "External URL for custom icon image"
+      - name: icon_file_url
+        description: "URL for uploaded icon file"
       - name: parent_category_ids
         description: "Comma-separated IDs of parent categories"
       - name: parent_category_names

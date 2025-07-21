@@ -111,6 +111,12 @@ select
   -- Description from joined table
   coalesce(cd.description, '') as description,
   
+  -- Icon fields from raw JSON
+  cb.raw_properties->>'icon__type' as icon_type,
+  cb.raw_properties->>'icon__emoji' as icon_emoji,
+  cb.raw_properties->>'icon__external__url' as icon_external_url,
+  cb.raw_properties->>'icon__file__url' as icon_file_url,
+  
   -- Parent categories with both IDs and names
   coalesce(pc.parent_category_ids, '') as parent_category_ids,
   coalesce(pcn.parent_category_names, '') as parent_category_names,
