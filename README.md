@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="assets/notion2pg-logo.png" alt="notion2pg" width="200"/>
+</div>
+
 # Notion → Postgres Sync
 
 A reproducible stack that incrementally ingests Notion databases into a dedicated Postgres warehouse, with full run traceability via Dagster.
