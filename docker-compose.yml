@@ -54,6 +54,8 @@ services:
   code:
     build: ./code_location
     env_file: .env
+    environment:
+      DAGSTER_POSTGRES_URL: postgresql://${PGUSER}:${PGPASSWORD}@postgres_dwh:5432/${DAGSTER_DB}
     volumes:
       - ./pipeline_state:/app/.dlt
     restart: "no"
