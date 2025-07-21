@@ -45,11 +45,12 @@ def notion_sync_asset(context):
         pipeline_name="notion_to_pg",
         destination="postgres",
         dataset_name="notion_sync",
-        credentials=PG_URL,
-        max_db_connections=2,
     )
     for db in DB_IDS:
-        info = pipeline.run(make_notion_resource(db)())
+        info = pipeline.run(
+            make_notion_resource(db)(),
+            credentials=PG_URL
+        )
         context.log.info(f"Loaded {info.load_packages[-1].row_count} rows from {db}")
 
 # Create a job that materializes the asset
