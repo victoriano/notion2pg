@@ -1,0 +1,6 @@
+version: 2
+sources:
+- name: notion_sync
+  description: Raw Notion data synced via dlt
+  schema: notion_sync
+  tables: []

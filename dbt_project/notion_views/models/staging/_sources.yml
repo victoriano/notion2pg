@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: notion_sync
+    description: Raw Notion data synced via dlt
+    schema: notion_sync
+    tables:
+      - name: notion_74f924b4672b4c0ead16511cdfe69396
+        description: "Notion database: categories"
+        meta:
+          database_id: "74f924b4672b4c0ead16511cdfe69396"
+          friendly_name: "categories"
+          
+      - name: notion_8931b2899f7848d3bcd13e9b05aae69b
+        description: "Notion database: books"
+        meta:
+          database_id: "8931b2899f7848d3bcd13e9b05aae69b"
+          friendly_name: "books"
+          
+      - name: notion_b981dec447fb4060877505e8cc63a45c
+        description: "Notion database: facts"
+        meta:
+          database_id: "b981dec447fb4060877505e8cc63a45c"
+          friendly_name: "facts"

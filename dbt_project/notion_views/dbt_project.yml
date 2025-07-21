@@ -1,0 +1,55 @@
+
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: 'notion_views'
+version: '1.0.0'
+config-version: 2
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'notion_views'
+
+# These configurations specify where dbt should look for different types of files.
+# The `model-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+# Variables for Notion database configuration
+vars:
+  notion_databases:
+    - database_id: "74f924b4672b4c0ead16511cdfe69396"
+      table_name: "notion_74f924b4672b4c0ead16511cdfe69396"
+      friendly_name: "categories"
+    - database_id: "8931b2899f7848d3bcd13e9b05aae69b"
+      table_name: "notion_8931b2899f7848d3bcd13e9b05aae69b"
+      friendly_name: "books"
+    - database_id: "b981dec447fb4060877505e8cc63a45c"
+      table_name: "notion_b981dec447fb4060877505e8cc63a45c"
+      friendly_name: "facts"
+  notion_source_schema: "notion_sync"
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+models:
+  notion_views:
+    # Staging models - views for fast development iteration
+    staging:
+      +materialized: view
+      +schema: staging
+    # Intermediate models - views for transformation steps
+    intermediate:
+      +materialized: view
+      +schema: intermediate
+    # Marts models - tables for final output, optimized for querying
+    marts:
+      +materialized: table
+      +schema: marts

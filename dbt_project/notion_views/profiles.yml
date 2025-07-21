@@ -1,0 +1,15 @@
+notion_views:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: postgres
+      password: supersecret
+      dbname: analytics
+      schema: notion_views
+      threads: 4
+      keepalives_idle: 0
+      connect_timeout: 10
+      retries: 1 
