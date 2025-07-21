@@ -31,6 +31,7 @@ services:
     ports: ["3000:3000"]
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./dbt_project:/opt/dagster/dbt_project
     depends_on:
       - postgres_dwh
       - code
@@ -46,6 +47,7 @@ services:
       DAGSTER_POSTGRES_URL: postgresql://${PGUSER}:${PGPASSWORD}@postgres_dwh:5432/${DAGSTER_DB}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ./dbt_project:/opt/dagster/dbt_project
     depends_on:
       - postgres_dwh
       - code
@@ -56,8 +58,15 @@ services:
     env_file: .env
     environment:
       DAGSTER_POSTGRES_URL: postgresql://${PGUSER}:${PGPASSWORD}@postgres_dwh:5432/${DAGSTER_DB}
+      # Add PostgreSQL env vars for dbt
+      PGHOST: postgres_dwh
+      PGPORT: 5432
+      PGDATABASE: ${PGDATABASE}
+      PGUSER: ${PGUSER}
+      PGPASSWORD: ${PGPASSWORD}
     volumes:
       - ./pipeline_state:/app/.dlt
+      - ./dbt_project:/opt/dagster/dbt_project
     restart: "no"
 
 volumes:

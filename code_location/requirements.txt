@@ -1,2 +1,5 @@
 dlt>=0.5
-requests 
+requests
+dagster-dbt
+dbt-core
+dbt-postgres 

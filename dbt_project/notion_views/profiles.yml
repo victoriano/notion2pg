@@ -3,11 +3,11 @@ notion_views:
   outputs:
     dev:
       type: postgres
-      host: localhost
-      port: 5432
-      user: postgres
-      password: supersecret
-      dbname: analytics
+      host: "{{ env_var('PGHOST', 'localhost') }}"
+      port: "{{ env_var('PGPORT', '5432') | int }}"
+      user: "{{ env_var('PGUSER', 'postgres') }}"
+      password: "{{ env_var('PGPASSWORD', 'supersecret') }}"
+      dbname: "{{ env_var('PGDATABASE', 'analytics') }}"
       schema: notion_views
       threads: 4
       keepalives_idle: 0
