@@ -24,9 +24,5 @@ run_coordinator:
   class: QueuedRunCoordinator
 
 run_launcher:
-  module: dagster_docker.docker_run_launcher
-  class: DockerRunLauncher
-  config:
-    env_vars:
-      - DAGSTER_POSTGRES_URL
-    network: notion2pg_default 
+  module: dagster.core.launcher
+  class: DefaultRunLauncher 
