@@ -1,0 +1,70 @@
+version: 2
+
+models:
+  # Original specific models (can be kept for reference or removed)
+  - name: stg_notion__categories
+    description: "Staging model for Notion categories database - cleaned and filtered"
+    columns:
+      - name: id
+        description: "Unique page identifier from Notion"
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_notion__books
+    description: "Staging model for Notion books database - cleaned and filtered"  
+    columns:
+      - name: id
+        description: "Unique page identifier from Notion"
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_notion__facts
+    description: "Staging model for Notion facts database - cleaned and filtered"
+    columns:
+      - name: id
+        description: "Unique page identifier from Notion"
+        tests:
+          - unique
+          - not_null
+  
+  # New generic models
+  - name: stg_notion_universal
+    description: |
+      Universal staging model that combines ALL configured Notion databases into a single table.
+      This is the recommended approach for new implementations as it requires no code changes
+      when adding new databases - just update the configuration.
+    columns:
+      - name: page_id
+        description: "Unique identifier for the Notion page"
+        tests:
+          - not_null
+      - name: created_time
+        description: "When the page was created in Notion"
+      - name: last_edited_time
+        description: "When the page was last modified"
+      - name: is_archived
+        description: "Whether the page is archived (always false in this view)"
+      - name: is_trashed
+        description: "Whether the page is in trash (always false in this view)"
+      - name: created_by
+        description: "ID of the user who created the page"
+      - name: last_edited_by
+        description: "ID of the user who last edited the page"
+      - name: database_name
+        description: "Friendly name of the source database (from configuration)"
+        tests:
+          - not_null
+      - name: database_id
+        description: "Notion database ID"
+        tests:
+          - not_null
+      - name: raw_properties
+        description: |
+          JSON object containing all original columns from the source table.
+          Properties can be extracted using arrow notation, e.g.:
+          raw_properties->>'properties__title__title' for title fields
+    tests:
+      - unique:
+          column_name: "page_id || database_id" 

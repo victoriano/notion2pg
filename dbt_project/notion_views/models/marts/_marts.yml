@@ -1,0 +1,61 @@
+version: 2
+
+models:
+  - name: categories_view
+    description: |
+      Materialized table for the categories Notion database.
+      Extracts category-specific properties and relationships.
+    columns:
+      - name: page_id
+        description: "Unique identifier for the category"
+        tests:
+          - unique
+          - not_null
+      - name: name
+        description: "Category name"
+      - name: parent_category_id
+        description: "ID of parent category (for hierarchical structure)"
+      - name: total_facts_count
+        description: "Rollup count of facts in this category"
+      - name: description
+        description: "Category description"
+
+  - name: books_view
+    description: |
+      Materialized table for the books Notion database.
+      Extracts book-specific properties including author, status, format.
+    columns:
+      - name: page_id
+        description: "Unique identifier for the book"
+        tests:
+          - unique
+          - not_null
+      - name: title
+        description: "Book title"
+      - name: subtitle
+        description: "Book subtitle"
+      - name: author_id
+        description: "Author property ID (join with multi-select table for names)"
+      - name: category_id
+        description: "Related category ID"
+      - name: why_read_it
+        description: "Why read this book"
+
+  - name: facts_view
+    description: |
+      Materialized table for the facts Notion database.
+      Extracts fact-specific properties and verification status.
+    columns:
+      - name: page_id
+        description: "Unique identifier for the fact"
+        tests:
+          - unique
+          - not_null
+      - name: fact_text
+        description: "The fact content"
+      - name: category_id
+        description: "Related category ID"
+      - name: source
+        description: "Source of the fact"
+      - name: is_verified
+        description: "Whether the fact has been verified" 

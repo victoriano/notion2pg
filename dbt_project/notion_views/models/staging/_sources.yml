@@ -22,3 +22,16 @@ sources:
         meta:
           database_id: "b981dec447fb4060877505e8cc63a45c"
           friendly_name: "facts"
+          
+      # Related tables for books
+      - name: notion_8931b2899f7848d3bcd13eczeseg69b__properties__name__title
+        description: "Book names (title property)"
+        
+      - name: notion_8931b2899f7848d3bcd13ekigqsgerties__author__multi_select
+        description: "Book authors multi-select values"
+        
+      - name: notion_8931b2899f7848d3bcd13exot5zqerties__status__multi_select
+        description: "Book status multi-select values"
+        
+      - name: notion_8931b2899f7848d3bcd13etpdbvqerties__format__multi_select
+        description: "Book format multi-select values"
