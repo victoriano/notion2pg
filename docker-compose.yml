@@ -1,0 +1,60 @@
+services:
+  postgres_dwh:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABASE}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+  dagster_web:
+    build:
+      context: .
+      dockerfile: Dockerfile_dagster
+    entrypoint:
+      - dagster-webserver
+      - -h
+      - "0.0.0.0"
+      - -p
+      - "3000"
+      - -w
+      - workspace.yaml
+    environment:
+      DAGSTER_POSTGRES_URL: postgresql://${PGUSER}:${PGPASSWORD}@postgres_dwh:5432/${DAGSTER_DB}
+    ports: ["3000:3000"]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - postgres_dwh
+      - code
+
+  dagster_daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile_dagster
+    entrypoint:
+      - dagster-daemon
+      - run
+    environment:
+      DAGSTER_POSTGRES_URL: postgresql://${PGUSER}:${PGPASSWORD}@postgres_dwh:5432/${DAGSTER_DB}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - postgres_dwh
+      - code
+    restart: unless-stopped
+
+  code:
+    build: ./code_location
+    env_file: .env
+    volumes:
+      - ./pipeline_state:/app/.dlt
+    restart: "no"
+
+volumes:
+  pg_data: 

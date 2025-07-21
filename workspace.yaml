@@ -1,0 +1,5 @@
+load_from:
+  - grpc_server:
+      host: code
+      port: 4000
+      location_name: "notion2pg_location" 
