@@ -31,7 +31,21 @@ def make_notion_resource(db_id: str):
         }
         while True:
             resp = requests.post(url, headers=headers, json=payload, timeout=30)
+            
+            # Check for HTTP errors
+            if resp.status_code != 200:
+                raise Exception(f"Notion API error for database {db_id}: HTTP {resp.status_code} - {resp.text}")
+            
             data = resp.json()
+            
+            # Check for API errors in response
+            if "object" in data and data["object"] == "error":
+                raise Exception(f"Notion API error for database {db_id}: {data.get('code', 'unknown')} - {data.get('message', 'no message')}")
+            
+            # Check for expected results structure
+            if "results" not in data:
+                raise Exception(f"Unexpected Notion API response for database {db_id}. Response keys: {list(data.keys())}. Full response: {data}")
+            
             yield data["results"]
             if not data.get("has_more"):
                 break
