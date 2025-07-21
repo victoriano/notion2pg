@@ -51,7 +51,7 @@ def notion_sync_asset(context):
             make_notion_resource(db)(),
             credentials=PG_URL
         )
-        context.log.info(f"Loaded {info.load_packages[-1].row_count} rows from {db}")
+        context.log.info(f"Successfully synced database {db} - Pipeline info: {info.pipeline.pipeline_name}")
 
 # Create a job that materializes the asset
 notion_sync_job = define_asset_job(
