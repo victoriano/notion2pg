@@ -63,8 +63,8 @@ models:
   - name: books_view_complete
     description: |
       Complete materialized table for books with all properties properly joined.
-      Includes actual book titles, author names, status values, and format values
-      from related tables, not just IDs.
+      Includes actual book titles, author names, status values, format values,
+      and category names from related tables, not just IDs.
     columns:
       - name: page_id
         description: "Unique identifier for the book"
@@ -79,6 +79,12 @@ models:
         description: "Book status values (e.g., Pending, Reading, Done)"
       - name: format
         description: "Book format values (e.g., Digital, Physical)"
+      - name: category_ids
+        description: "Comma-separated IDs of the book's categories"
+      - name: category_names
+        description: "Comma-separated names of the book's categories (e.g., Economics, History)"
+      - name: category_count
+        description: "Number of categories this book belongs to"
       - name: amazon_url
         description: "Amazon URL for the book"
         
@@ -125,6 +131,8 @@ models:
         description: "Why this fact is worth reading"
       - name: category_ids
         description: "Comma-separated IDs of related categories"
+      - name: category_names
+        description: "Comma-separated names of related categories (e.g., Spain, Economics)"
       - name: category_count
         description: "Number of categories this fact belongs to"
       - name: is_verified

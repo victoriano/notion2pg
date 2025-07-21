@@ -36,6 +36,9 @@ sources:
       - name: notion_8931b2899f7848d3bcd13etpdbvqerties__format__multi_select
         description: "Book format multi-select values"
         
+      - name: notion_8931b2899f7848d3bcd13exyhgkgoperties__category__relation
+        description: "Book category relations"
+        
       # Related tables for categories
       - name: notion_74f924b4672b4c0ead1651bwuwxw_properties__category__title
         description: "Category names (title property)"

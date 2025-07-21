@@ -45,6 +45,25 @@ fact_categories as (
     count(*) as category_count
   from {{ source('notion_sync', 'notion_b981dec447fb4060877505vxkhqwoperties__category__relation') }}
   group by _dlt_parent_id
+),
+
+-- Get all categories for name lookup
+categories as (
+  select 
+    page_id as category_id,
+    name as category_name
+  from {{ ref('categories_view_complete') }}
+),
+
+-- Join fact categories with category names
+fact_category_names as (
+  select 
+    fc._dlt_parent_id,
+    string_agg(coalesce(c.category_name, fcr.id), ', ' order by fcr._dlt_list_idx) as category_names
+  from {{ source('notion_sync', 'notion_b981dec447fb4060877505vxkhqwoperties__category__relation') }} fcr
+  join fact_categories fc on fc._dlt_parent_id = fcr._dlt_parent_id
+  left join categories c on c.category_id = fcr.id
+  group by fc._dlt_parent_id
 )
 
 select 
@@ -61,8 +80,9 @@ select
   -- Why read it from joined table
   coalesce(wri.why_read_it, '') as why_read_it,
   
-  -- Categories
+  -- Categories with both IDs and names
   coalesce(fc.category_ids, '') as category_ids,
+  coalesce(fcn.category_names, '') as category_names,
   coalesce(fc.category_count, 0) as category_count,
   
   -- Other properties from raw JSON
@@ -81,4 +101,5 @@ select
 from facts_base fb
 left join fact_titles ft on fb.dlt_id = ft._dlt_parent_id
 left join why_read_it wri on fb.dlt_id = wri._dlt_parent_id
-left join fact_categories fc on fb.dlt_id = fc._dlt_parent_id 
+left join fact_categories fc on fb.dlt_id = fc._dlt_parent_id
+left join fact_category_names fcn on fb.dlt_id = fcn._dlt_parent_id 
